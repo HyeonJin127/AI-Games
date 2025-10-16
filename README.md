@@ -19,8 +19,10 @@
   - OpenCV
   - numpy
   
-- 미로 학습 프로그램 ( 최단 경로 탐색 )
+- 미로 학습 ( 최단 경로 탐색 )
   - matplot
   - numpy
- 
+
+- 프로그램
+  - Pygame
 ---
