@@ -1,1 +1,112 @@
 
+🚀 지금까지의 진행 요약 (설치 제외, 순수 프로젝트 흐름 정리)
+🎯 프로젝트 목표
+
+미로형 맵에서 AI1 vs AI2가 미션을 수행하며 대결하는 강화학습 기반 AI PvP 게임.
+
+AI1: 학습 대상 (주인공)
+
+AI2: 임시 스파링 AI (초기엔 랜덤, 나중엔 규칙 기반으로 업그레이드)
+
+목표: 아이템 수집 / 미션 수행 / 상대 방해 / 장애물 회피 / 높은 점수 획득
+
+🧩 시스템 구조 구상
+
+미로 환경 (env_maze.py)
+
+OpenAI Gym 스타일로 설계
+
+상태(state): 에이전트 위치 + 미션 + 아이템 정보
+
+행동(action): 이동 / 아이템 사용 등
+
+보상(reward):
+
+아이템 획득 시 +
+
+충돌 시 –
+
+미션 완수 시 ++
+
+렌더링: pygame or 텍스트 기반
+
+AI 제어 로직
+
+AI1 → Q-learning / DQN 학습 기반
+
+AI2 →
+
+초기: 랜덤 행동
+
+이후: 규칙 기반 행동(bot upgrade)
+
+궁극적 목표: 사람이 AI2 대신 플레이해도 AI1이 대응 가능
+
+🧠 강화학습 로드맵
+
+✅ 탭형 Q-learning (Q-table 기반)
+
+학습 데이터: {state, action} → reward 테이블
+
+구현 파일: train_qlearning.py
+
+출력: 학습 리워드(log) 저장
+
+⚙️ 시각화 단계
+
+plot_rewards.py 로 episode별 평균 보상 그래프 출력
+
+🔜 고도화 단계 (다음 목표)
+
+AI2를 규칙 기반 봇으로 교체 (지능형 상대)
+
+상태 정의에 “아이템/미션 정보” 추가
+
+학습 데이터(rewards_per_episode) 파일로 저장
+
+시각화 자동화
+
+🔜 DQN 업그레이드
+
+구현 파일: train_dqn.py
+
+PyTorch 기반 신경망 학습
+
+상태 → Q-value를 직접 추정
+
+학습된 가중치 저장 (파일 기반)
+
+📂 현재 코드 구성
+파일명	역할
+env_maze.py	미로 환경 (Gym 스타일) 정의
+run_random_demo.py	AI 없이 환경 시뮬레이션 (랜덤 플레이 테스트)
+train_qlearning.py	기본 Q-learning 학습 루프
+train_dqn.py	DQN 기반 강화학습 버전
+plot_rewards.py	학습 리워드 시각화 스크립트
+🧩 현재 상태
+
+✅ 환경 로딩 정상
+✅ Q-learning 학습 스크립트 실행 가능
+✅ DQN (PyTorch) 준비 완료
+✅ venv(3.11 기반) 완전 정상화
+✅ matplotlib 시각화 가능
+
+🔜 다음 목표 (추천 순서)
+
+Q-learning 학습 결과(rewards_per_episode) 저장 및 시각화 자동화
+
+AI2 규칙 기반 봇으로 교체 (랜덤 → 간단한 전략성 부여)
+
+아이템 시스템 구현 (랜덤 드랍, 효과, 방해 등)
+
+train_dqn.py 정식 학습 테스트
+
+AI1이 학습된 모델로 실시간 대결 시뮬레이션
+
+🧠 머신러닝 학습 요약 (지금까지 얻은 핵심 지식)
+개념	요약
+Gym 스타일 환경	상태(state), 행동(action), 보상(reward), 종료(done)을 가진 RL 환경 설계 패턴
+Q-learning	상태-행동 쌍을 테이블 형태로 저장하며, Bellman 식을 통해 반복적으로 업데이트
+탭형 vs DQN	Q-table은 단순 환경에 적합, DQN은 신경망을 사용해 복잡한 상태(이미지 등) 처리
+Exploration vs Exploitation	ε-greedy 정책으로 탐험(랜덤)과 활용(최적 행동)을 균형 있게 조정
+학습 데이터 시각화	episode별 reward 변화를 그래프로 확인해 학습 수렴 여부를 평가
